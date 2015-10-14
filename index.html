@@ -2,8 +2,17 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Guessing Game</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Guessing Game - JS 1</title>
+    
+    
+    
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+
+        <link rel="stylesheet" href="css/style.css">
+
+    
+    
+    
   </head>
 
 <body class="background">
@@ -11,25 +20,31 @@
     <div class="center">
       <!-- Game title -->
       <h1>Guessing Game</h1>
-      <form>
+      <p id='helper-text'>Enter a guess from 1-100. Guess right to win a prize!</p>
+      <form id="guessing-form">
         <div>
           <!-- Number input box -->
-          <input class="number-input" type="text" placeholder="Enter a guess from 1-100. Guess right to win a prize!" onfocus=this.placeholder=''>
+          <input id="number-input" type="text" placeholder="Enter a guess" autocomplete="off">
           <br>
           <!-- Hint button -->
           <button class="btn btn-default" type="button">Give a hint</button>
           <!-- Submit button -->
-          <input class="btn btn-lg btn-primary" type="submit">
+          <button id='submit-btn' class="btn btn-lg btn-primary" type="button">Submit</button>
           <!-- Start Over button -->
-          <button class="btn btn-default" type="reset">Start Over!</button>
+          <button id='startover-btn' class="btn btn-default" type="button">Start Over!</button>
         </div>
       </form>
       <!-- Remaining guesses -->
-      <h4>5 Guesses Remaining</h4>
+      <p>Remaining Guesses:</p><h4 id="guesses-remaining">5</h4>
     </div>
   </div>
-</body>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script src="js/index.js"></script>
+
+    
+    
+    
+  </body>
 </html>
-    
-    
-    
