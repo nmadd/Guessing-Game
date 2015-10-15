@@ -21,19 +21,21 @@
       <!-- Game title -->
       <h1>Guessing Game</h1>
       <p id='helper-text'>Enter a guess from 1-100. Guess right to win a prize!</p>
+
       <form id="guessing-form">
         <div>
           <!-- Number input box -->
           <input id="number-input" type="text" placeholder="Enter a guess" autocomplete="off">
           <br>
           <!-- Hint button -->
-          <button class="btn btn-default" type="button">Give a hint</button>
+          <button id="hint-btn" class="btn btn-default" type="button">Give a hint</button>
           <!-- Submit button -->
           <button id='submit-btn' class="btn btn-lg btn-primary" type="button">Submit</button>
           <!-- Start Over button -->
           <button id='startover-btn' class="btn btn-default" type="button">Start Over!</button>
         </div>
       </form>
+      <div id='prev-guesses'></div>
       <!-- Remaining guesses -->
       <p>Remaining Guesses:</p><h4 id="guesses-remaining">5</h4>
       <div id="prize-image"></div>
