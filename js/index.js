@@ -10,25 +10,34 @@ var guesses = [];
 var generateRandNum = function (){
   target = Math.floor(Math.random() * 100 + 1);
 };
+var prevGuess = 0;
+var prevPrevGuess = 0;
+
 //Generates random number
 generateRandNum();
 
-
+var updatePrevGuess = function(){
+  prevGuess = guesses[guesses.length - 1];
+  prevPrevGuess = guesses[guesses.length - 2];
+};
 
 var guessingGame = function(){
 
 
   var guessInput = function(){
     guesses.push($('#number-input').val());
-    console.log(target);
-    console.log(guesses);
+    //tempResetter();
+    updatePrevGuess();
+    setLowHigh();
     hotOrCold();
-    bgdChange();
+    inputValidator();
     document.getElementById("guessing-form").reset();
     guessTracker();
     repeatChecker();
-    higherOrLower();
-    hotColdSetter();
+    console.log(target);
+    console.log(guesses);
+    console.log(prevGuess);
+    winChecker();
   };
   return guessInput();
 };
@@ -37,7 +46,7 @@ var startOver = function(){
   guesses = [];
   generateRandNum();
   resetBackground('white');
-  $('p, h1, h4').css('color','black');
+  //tempResetter();
   changeHelperText('Enter a guess from 1-100. Guess right to win a prize!');
   $('#guesses-remaining').text(5);
 };
@@ -53,47 +62,103 @@ var resetBackground = function(color){
   $('.background').css('background-color', color);
 };
 
+
 //Creates 'hot red' and 'cool blue' color variables, to be used as background colors
 var hotRed = '#FF4136';
 var coolBlue = '#7FDBFF';
+var burningUp = '#FF0000';
+var iceCold = '#C4EFFF';
+var warmRed = '#FC6868';
 
-var hotOrCold = function(){
-  //var guess1 = guesses.pop();
-  var guess1 = guesses[guesses.length - 1];
-  var guess2 = guesses[guesses.length - 2];
-  //Gets absolute value of difference between guess and target 
-  var guessDist1 = Math.abs(target - guess1);
-  var guessDist2 = Math.abs(target - guess2);
-
-  if(guessDist1 < guessDist2){
-    isHot = true;
-    isCold = false;
-  } else if(guessDist2 < guessDist1) {
-    isCold = true;
-    ishot = false;
-  }
-
-};
+/*
 
 //Tracks whether user is hot or cold
+var isWarm = false;
 var isHot = false;
+var isBurningUp = false;
 var isCold = false;
+var isIceCold = false;
 
+//Resets temperature variables
+var tempResetter = function(){
+  isWarm = false;
+  isHot = false;
+  isBurningUp = false;
+  isCold = false
+  isIceCold = false;
+};
+
+*/
+
+var hotOrCold = function(){
+ 
+  var range = Math.abs(target - prevGuess);
+  if(range >0 && range <=5){
+    //isBurningUp = true;
+    resetBackground(burningUp);
+    changeHelperText("You're BURNING UP! Try guessing a little " + lowHigh);
+  }
+  if(range >5 && range <=10){
+     //isHot = true;
+     resetBackground(hotRed);
+     changeHelperText("You're getting HOT! Try guessing " + lowHigh);
+  }
+  if(range >10 && range <=15){
+    //isWarm = true;
+    resetBackground(warmRed);
+    changeHelperText("You're warming up! Try guessing " + lowHigh);
+  }
+  if(range >15 && range <=25){
+    //isCold = true;
+    resetBackground(coolBlue);
+    changeHelperText("It's chilly in here... Try guessing " + lowHigh);
+
+  }
+  if(range >25){
+    //isIceCold = true;
+    resetBackground(iceCold);
+    changeHelperText("Brrr...you're ice cold. Try guessing a lot " + lowHigh);
+  }
+    
+};
+
+/*
 //Changes background color depending on whether user is hot or cold
 var bgdChange = function(){
   if(isHot === true){
     resetBackground(hotRed);
-    $('p, h1, h4').css('color','white');
+    
   };
   if(isCold === true){
     resetBackground(coolBlue);
-    $('p, h1, h4').css('color','white');
+    
   }; 
+  if(isBurningUp === true){
+    resetBackground(burningUp);
+   
+  }; 
+  if(isWarm === true){
+    resetBackground(warmRed);
+  
+  };
+  if(isIceCold === true){
+    resetBackground(iceCold);
+   
+  };  
 };
+*/
 
 var changeHelperText = function(text){
   $('#helper-text').text(text);
 };
+
+/*var changeHelperTextCreator = function(text){
+  return function(){
+    $('#helper-text').text(text);
+  }:
+};
+
+var changeHelperText = changeHelperTextCreator(" Your guess of " + guesses[guesses.length-1]+ " was a little high. Guess lower!")
 
 
 
@@ -106,26 +171,75 @@ var higherOrLower = function(){
   };
 };
 
+*/
 
+var lowHigh = '';
+var setLowHigh = function(){
+  if(prevGuess < target)
+    lowHigh = 'higher.';
+  if(prevGuess > target)
+    lowHigh = 'lower.';
+};
 
+/*
+var higherOrLower = function(){
+  if(isWarm){
+    changeHelperText("You're warming up! Try guessing " + lowHigh);
+  };
+  if(isHot){
+    changeHelperText("You're getting HOT! Try guessing " + lowHigh);
+  };
+  if(isBurningUp){
+    changeHelperText("You're BURNING UP! Try guessing a little " + lowHigh);
+  };
+  if(isIceCold){
+    changeHelperText("Brrr...you're ice cold. Try guessing a lot " + lowHigh);
+  };
+   if(isCold){
+    changeHelperText("It's chilly in here... Try guessing " + lowHigh);
+  };
+};
+
+*/
 
 
 //Tracks amount of guesses
 var guessTracker = function(){
   var guessNum = guesses.length;
+  //Changes 'Guesses Remaining' number
   $('#guesses-remaining').text(5 - guessNum);
   if(guessNum === 5){
     alert("Sorry that's all your guesses! The number was " + target);
     startOver();
   }
 };
+
 //Checks if guess has already been made. If it has been, removes that guess and prompts the users to guess again
 var repeatChecker = function(){
   for(var i =0; i < guesses.length -1; i++){
     if(guesses[i] === guesses[guesses.length -1]){
       alert('Wait you already guessed that! Guess again');
+      //Removes last guess
       guesses.splice(-1,1);
     }
+  }
+};
+
+//Checks for winner
+var winChecker = function(){
+    if(prevGuess == target){
+      alert('You win! Click OK to see your prize');
+      resetBackground('white');
+      $("#prize-image").append("<img id='theImg' src='http://php.scripts.psu.edu/dmh5086/t/i/shells/v4/orange_stars.jpg'/>");
+    }
+};
+
+var inputValidator = function(){
+  var num = parseInt(prevGuess);
+  if(num < 0 || num > 100){
+    alert('Whoooa sorry that number is out of range! Try guessing again');
+    //Removes last guess
+    guesses.splice(-1,1);
   }
 };
 
