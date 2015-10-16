@@ -25,19 +25,19 @@
       <form id="guessing-form">
         <div>
           <!-- Number input box -->
-          <input id="number-input" type="text" placeholder="Enter a guess" autocomplete="off">
+          <input class='hide-me' id="number-input" type="text" placeholder="Enter a guess" autocomplete="off">
           <br>
           <!-- Hint button -->
-          <button id="hint-btn" class="btn btn-default" type="button">Give a hint</button>
+          <button id="hint-btn" class="btn btn-default hide-me" type="button">Give a hint</button>
           <!-- Submit button -->
-          <button id='submit-btn' class="btn btn-lg btn-primary" type="button">Submit</button>
+          <button id='submit-btn' class="btn btn-lg btn-primary hide-me" type="button">Submit</button>
           <!-- Start Over button -->
           <button id='startover-btn' class="btn btn-default" type="button">Start Over!</button>
         </div>
       </form>
-      <div id='prev-guesses'></div>
+      <div id='prev-guesses' class='hide-me'></div>
       <!-- Remaining guesses -->
-      <p>Remaining Guesses:</p><h4 id="guesses-remaining">5</h4>
+      <div class='hide-me'><p>Remaining Guesses:</p><h4 id="guesses-remaining">5</h4></div>
       <div id="prize-image"></div>
     </div>
   </div>
